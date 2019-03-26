@@ -42,7 +42,7 @@ func findHostedZone(dnsName string) *route53.HostedZone {
 func findResourceRecord(targetRecordSetName string, hostedZone *route53.HostedZone, token *string) *route53.ResourceRecordSet {
 	fmt.Print("Finding resource record using name and hosted zone: ", targetRecordSetName, *hostedZone.Name)
 	if token != nil {
-		fmt.Println(" Using token: ", *token)
+		fmt.Println("Using token: ", *token)
 	}
 
 	svc := route53.New(session.New())
@@ -194,7 +194,7 @@ func deleteRecordSet(dnsName string, hostedZone *route53.HostedZone, recordSet *
 		ChangeBatch: &route53.ChangeBatch{
 			Changes: []*route53.Change{
 				{
-					Action:            aws.String("DELETE"),
+					Action: aws.String("DELETE"),
 					ResourceRecordSet: recordSet,
 				},
 			},

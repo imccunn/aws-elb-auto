@@ -109,8 +109,6 @@ func describeELBInstanceHealth(elbName string) *elb.DescribeInstanceHealthOutput
 				fmt.Println(aerr.Error())
 			}
 		} else {
-			// Print the error, cast err to awserr.Error to get the Code and
-			// Message from an error.
 			fmt.Println(err.Error())
 		}
 		return nil
@@ -145,8 +143,6 @@ func deleteElb(elbName string) *elb.DeleteLoadBalancerOutput {
 				fmt.Println(aerr.Error())
 			}
 		} else {
-			// Print the error, cast err to awserr.Error to get the Code and
-			// Message from an error.
 			fmt.Println(err.Error())
 		}
 		return nil
@@ -186,8 +182,8 @@ func createLbCookieStickinessPolicy(elbName string, policyName string) {
 	svc := elb.New(session.New())
 	input := &elb.CreateLBCookieStickinessPolicyInput{
 		CookieExpirationPeriod: aws.Int64(1800),
-		LoadBalancerName:       aws.String(elbName),
-		PolicyName:             aws.String(policyName),
+		LoadBalancerName: aws.String(elbName),
+		PolicyName: aws.String(policyName),
 	}
 
 	_, err := svc.CreateLBCookieStickinessPolicy(input)
@@ -249,9 +245,7 @@ func setLoadBalancerPolicesOfListener(elbName string, policyNames []string) {
 
 func createELBPolicy(elbName string, policyName string, policyTypeName string, policyAttributes []*elb.PolicyAttributeDescription) {
 	fmt.Println("Creating ELB SSL Policy...")
-	defaultSSLPolicy := "ELBSecurityPolicy-2016-08"
-	// "SSLNegotiationPolicy-443"
-	// "SSLNegotiationPolicyType"
+	defaultSSLPolicy := "some-elb-security-policy"
 	svc := elb.New(session.New())
 	input := &elb.CreateLoadBalancerPolicyInput{
 		LoadBalancerName: aws.String(elbName),
@@ -264,11 +258,6 @@ func createELBPolicy(elbName string, policyName string, policyTypeName string, p
 			},
 		},
 	}
-	// allAttributes := input.PolicyAttributes
-	// for _, policyAttribute := range policyAttributes {
-	// 	allAttributes = append(input.PolicyAttributes, &elb.PolicyAttribute{AttributeName: policyAttribute.AttributeName, AttributeValue: policyAttribute.AttributeValue})
-	// }
-	// input.SetPolicyAttributes(allAttributes)
 
 	_, err := svc.CreateLoadBalancerPolicy(input)
 	if err != nil {
