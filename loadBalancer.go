@@ -19,6 +19,7 @@ func getElbDescription(elbName string) *elb.LoadBalancerDescription {
 			aws.String(elbName),
 		},
 	}
+
 	result, err := svc.DescribeLoadBalancers(input)
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
@@ -59,6 +60,7 @@ func createLBListenersFromDescription(elbDescription *elb.LoadBalancerDescriptio
 		}
 		listeners = append(listeners, listener)
 	}
+
 	return listeners
 }
 
@@ -86,6 +88,7 @@ func registerInstancesToElb(loadBalancerName *string, instances []*elb.Instance)
 		} else {
 			fmt.Println(err.Error())
 		}
+
 		return
 	}
 }
@@ -124,6 +127,7 @@ func createLoadBalancer(input *elb.CreateLoadBalancerInput) *elb.CreateLoadBalan
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
+
 	return result
 }
 
@@ -174,6 +178,7 @@ func describeELBTags(elbName string) *elb.TagDescription {
 		}
 		return nil
 	}
+
 	return result.TagDescriptions[0]
 }
 
@@ -204,6 +209,7 @@ func createLbCookieStickinessPolicy(elbName string, policyName string) {
 		} else {
 			fmt.Println(err.Error())
 		}
+
 		return
 	}
 }
@@ -239,6 +245,7 @@ func setLoadBalancerPolicesOfListener(elbName string, policyNames []string) {
 		} else {
 			fmt.Println(err.Error())
 		}
+
 		return
 	}
 }
@@ -279,6 +286,7 @@ func createELBPolicy(elbName string, policyName string, policyTypeName string, p
 		} else {
 			fmt.Println(err.Error())
 		}
+
 		return
 	}
 }
@@ -315,6 +323,7 @@ func describeELBPolicy(elbName string, policyName string) *elb.PolicyDescription
 			targetPolicy = policyDescription
 		}
 	}
+
 	return targetPolicy
 }
 
@@ -333,6 +342,7 @@ func configureHealthCheck(input *elb.ConfigureHealthCheckInput) {
 		} else {
 			fmt.Println(err.Error())
 		}
+
 		return
 	}
 }
@@ -364,5 +374,4 @@ func waitForELBInstanceInService(elbName string) {
 			break
 		}
 	}
-
 }

@@ -74,6 +74,7 @@ func findResourceRecord(targetRecordSetName string, hostedZone *route53.HostedZo
 	if recordSet != nil {
 		return recordSet
 	}
+
 	return nil
 }
 
@@ -107,6 +108,7 @@ func cnameBatchChange(changes []*route53.Change, hostedZone route53.HostedZone) 
 		}
 		return nil
 	}
+
 	return result
 }
 
@@ -184,6 +186,7 @@ func findElbNameFromDNSRecordSet(hostedZoneDNS string, targetDNS string) string 
 	captureGroups := re.FindStringSubmatch(*sourceResourceRecord.ResourceRecords[0].Value)
 	fmt.Println("Found ELB Name: ", captureGroups[2])
 	elbName := captureGroups[2]
+
 	return elbName
 }
 
